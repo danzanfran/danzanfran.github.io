@@ -1,33 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artist — Lutenist & Music Theorist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <title>Page Title</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="dani_styles.css">
+    :root {
+      --bg: #f5f2ec;
+      --bg2: #edeae2;
+      --ink: #1a1814;
+      --ink2: #5a5650;
+      --accent: #8b6f47;
+      --accent2: #c4a882;
+      --line: rgba(26,24,20,0.12);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(245,242,236,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 5rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-subtitle {
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-bottom: 2.5rem;
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--ink2);
+      max-width: 38ch;
+      margin-bottom: 3rem;
+      line-height: 1.9;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+
+    .hero-right {
+      position: relative;
+      background: var(--bg2);
+      overflow: hidden;
+    }
+    .hero-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--ink2);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hero-img-placeholder svg {
+      opacity: 0.3;
+      width: 80px; height: 80px;
+    }
+    .hero-caption {
+      position: absolute;
+      bottom: 2rem; left: 2rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink2);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 8rem 5rem; }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+    .divider {
+      width: 48px; height: 1px;
+      background: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--ink2);
+      margin-bottom: 1.4rem;
+      font-size: 1rem;
+    }
+    .about-photo {
+      background: var(--bg2);
+      aspect-ratio: 3/4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      color: var(--ink2);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .about-photo svg { opacity: 0.25; width: 48px; height: 48px; }
+
+    /* ── PHOTOS ── */
+    #photos { background: var(--bg2); }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .photo-cell {
+      background: var(--bg);
+      aspect-ratio: 4/5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      color: var(--ink2);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .photo-cell:hover { transform: scale(0.98); }
+    .photo-cell svg { opacity: 0.2; width: 36px; height: 36px; }
+    .photo-cell span { opacity: 0.5; }
+
+    /* ── VIDEOS ── */
+    #videos { background: var(--bg); }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .video-card {
+      background: var(--bg2);
+    }
+    .video-thumb {
+      aspect-ratio: 16/9;
+      background: #d8d4cc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .play-btn {
+      width: 56px; height: 56px;
+      border: 1.5px solid rgba(26,24,20,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .video-thumb:hover .play-btn {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .play-btn svg { fill: var(--ink2); transition: fill 0.2s; }
+    .video-thumb:hover .play-btn svg { fill: white; }
+    .video-info { padding: 1.4rem 1.6rem; }
+    .video-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+    .video-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--ink2);
+      text-transform: uppercase;
+    }
+
+    /* ── CONCERTS ── */
+    #concerts { background: var(--bg2); }
+    .concert-list { max-width: 700px; }
+    .concert-item {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .concert-item:first-child { border-top: 1px solid var(--line); }
+    .concert-date-block { text-align: center; }
+    .concert-month {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .concert-day {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      line-height: 1;
+      font-weight: 300;
+    }
+    .concert-year {
+      font-size: 0.62rem;
+      color: var(--ink2);
+      letter-spacing: 0.1em;
+    }
+    .concert-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.25rem;
+    }
+    .concert-detail {
+      font-size: 0.8rem;
+      color: var(--ink2);
+    }
+    .concert-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      padding: 0.3rem 0.7rem;
+      color: var(--ink2);
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--ink);
+      color: var(--bg);
+      text-align: center;
+    }
+    #contact .section-title { color: var(--bg); }
+    #contact .section-label { color: var(--accent2); }
+    #contact .divider { background: var(--accent2); margin: 0 auto 3rem; }
+    .contact-sub {
+      font-size: 0.9rem;
+      color: rgba(245,242,236,0.55);
+      max-width: 40ch;
+      margin: 0 auto 3rem;
+    }
+    .contact-links {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+    }
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--bg);
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent2); }
+    .contact-link-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.45);
+    }
+    .contact-link-value { font-family: var(--serif); font-size: 1.1rem; }
+
+    .contact-form {
+      max-width: 480px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: rgba(245,242,236,0.07);
+      border: 1px solid rgba(245,242,236,0.18);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      padding: 1rem 1.2rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(245,242,236,0.3);
+      letter-spacing: 0.05em;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent2);
+    }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .btn-light {
+      display: inline-block;
+      padding: 0.85rem 2.5rem;
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: none;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-light:hover { background: var(--accent2); color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(245,242,236,0.08);
+      padding: 2rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(245,242,236,0.3);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { height: 50vw; }
+      .hero-left { padding: 4rem 1.5rem; }
+      #about { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem; }
+      section { padding: 5rem 1.5rem; }
+      .photo-grid { grid-template-columns: repeat(2,1fr); }
+      .video-grid { grid-template-columns: 1fr; }
+      .concert-item { grid-template-columns: 70px 1fr; }
+      .concert-tag { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="header">
-	<h1>Dani's Website</h1>
-	<p>Musician etc.</p>
-</div>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">Your Name</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#photos">Photos</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#concerts">Concerts</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-<div class="navbar">
-  <a href="homepage.html">Home</a>
-  <a href="performance.html">Performance</a>
-  <a href="academic.html" class="right">Academics</a>
-</div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left fade-in">
+    <p class="hero-eyebrow">Lutenist · Theorbist · Guitarist</p>
+    <h1 class="hero-name">Your<br><em>Name</em></h1>
+    <p class="hero-subtitle">Early Music &amp; Music Theory</p>
+    <p class="hero-desc">
+      Performer and scholar working at the intersection of historical plucked string traditions and contemporary music theory. Based in [City].
+    </p>
+    <a href="#concerts" class="btn">Upcoming Concerts</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <!-- Replace with: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;" /> -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Your portrait here</span>
+    </div>
+    <p class="hero-caption">Photo credit / location</p>
+  </div>
+</section>
 
-<div class="row">
-  <div class="side">lorem ipsum</div>
-  <div class="main">hi my name is dani. I am a freelancing musician and music theorist. This is my very cool website!</div>
-</div>
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text fade-in">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Musician &amp;<br>Scholar</h2>
+    <div class="divider"></div>
+    <p>
+      Write your bio here. Describe your background in lute, theorbo, and guitar — how you came to early music, your training, the repertoire you love most.
+    </p>
+    <p>
+      You can add a second paragraph about your work in music theory — your research interests, publications, teaching, or any academic positions you hold.
+    </p>
+    <p>
+      A third paragraph might cover your artistic philosophy, collaborations, ensembles you perform with, or recordings.
+    </p>
+    <br>
+    <a href="#contact" class="btn">Get in Touch</a>
+  </div>
+  <div class="about-photo fade-in">
+    <!-- Replace with: <img src="about-photo.jpg" style="width:100%;height:100%;object-fit:cover;" /> -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+    <span>Photo</span>
+  </div>
+</section>
 
-<div class="footer">
-  <h2>We're still ballin'</h2>
-</div>
+<!-- PHOTOS -->
+<section id="photos">
+  <p class="section-label fade-in">Gallery</p>
+  <h2 class="section-title fade-in">Photos</h2>
+  <div class="divider fade-in"></div>
+  <div class="photo-grid">
+    <!-- Replace each .photo-cell with: <img src="photo.jpg" style="width:100%;aspect-ratio:4/5;object-fit:cover;" /> -->
+    <div class="photo-cell fade-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Photo 1</span>
+    </div>
+    <div class="photo-cell fade-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Photo 2</span>
+    </div>
+    <div class="photo-cell fade-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Photo 3</span>
+    </div>
+    <div class="photo-cell fade-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Photo 4</span>
+    </div>
+    <div class="photo-cell fade-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Photo 5</span>
+    </div>
+    <div class="photo-cell fade-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Photo 6</span>
+    </div>
+  </div>
+</section>
 
+<!-- VIDEOS -->
+<section id="videos">
+  <p class="section-label fade-in">Performances</p>
+  <h2 class="section-title fade-in">Videos</h2>
+  <div class="divider fade-in"></div>
+  <div class="video-grid">
+
+    <div class="video-card fade-in">
+      <!-- To embed a YouTube video, replace .video-thumb with:
+           <iframe width="100%" style="aspect-ratio:16/9;border:none;" src="https://www.youtube.com/embed/VIDEO_ID"></iframe> -->
+      <div class="video-thumb" onclick="alert('Replace with YouTube embed')">
+        <div class="play-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-info">
+        <p class="video-title">Piece Title — Composer</p>
+        <p class="video-meta">Lute · Venue · Year</p>
+      </div>
+    </div>
+
+    <div class="video-card fade-in">
+      <div class="video-thumb" onclick="alert('Replace with YouTube embed')">
+        <div class="play-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-info">
+        <p class="video-title">Piece Title — Composer</p>
+        <p class="video-meta">Theorbo · Venue · Year</p>
+      </div>
+    </div>
+
+    <div class="video-card fade-in">
+      <div class="video-thumb" onclick="alert('Replace with YouTube embed')">
+        <div class="play-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-info">
+        <p class="video-title">Piece Title — Composer</p>
+        <p class="video-meta">Guitar · Venue · Year</p>
+      </div>
+    </div>
+
+    <div class="video-card fade-in">
+      <div class="video-thumb" onclick="alert('Replace with YouTube embed')">
+        <div class="play-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-info">
+        <p class="video-title">Piece Title — Composer</p>
+        <p class="video-meta">Lute · Venue · Year</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONCERTS -->
+<section id="concerts">
+  <p class="section-label fade-in">Calendar</p>
+  <h2 class="section-title fade-in">Upcoming<br>Concerts</h2>
+  <div class="divider fade-in"></div>
+  <div class="concert-list">
+
+    <div class="concert-item fade-in">
+      <div class="concert-date-block">
+        <p class="concert-month">Apr</p>
+        <p class="concert-day">12</p>
+        <p class="concert-year">2026</p>
+      </div>
+      <div>
+        <p class="concert-title">Concert Title</p>
+        <p class="concert-detail">Venue Name · City, Country</p>
+        <p class="concert-detail" style="margin-top:0.2rem; font-size:0.75rem;">8:00 PM — with Ensemble Name</p>
+      </div>
+      <span class="concert-tag">Tickets</span>
+    </div>
+
+    <div class="concert-item fade-in">
+      <div class="concert-date-block">
+        <p class="concert-month">May</p>
+        <p class="concert-day">03</p>
+        <p class="concert-year">2026</p>
+      </div>
+      <div>
+        <p class="concert-title">Concert Title</p>
+        <p class="concert-detail">Venue Name · City, Country</p>
+        <p class="concert-detail" style="margin-top:0.2rem; font-size:0.75rem;">7:30 PM — Solo Recital</p>
+      </div>
+      <span class="concert-tag">Free</span>
+    </div>
+
+    <div class="concert-item fade-in">
+      <div class="concert-date-block">
+        <p class="concert-month">Jun</p>
+        <p class="concert-day">21</p>
+        <p class="concert-year">2026</p>
+      </div>
+      <div>
+        <p class="concert-title">Concert Title</p>
+        <p class="concert-detail">Venue Name · City, Country</p>
+        <p class="concert-detail" style="margin-top:0.2rem; font-size:0.75rem;">6:00 PM — Festival</p>
+      </div>
+      <span class="concert-tag">Tickets</span>
+    </div>
+
+    <div class="concert-item fade-in">
+      <div class="concert-date-block">
+        <p class="concert-month">Sep</p>
+        <p class="concert-day">08</p>
+        <p class="concert-year">2026</p>
+      </div>
+      <div>
+        <p class="concert-title">Concert Title</p>
+        <p class="concert-detail">Venue Name · City, Country</p>
+        <p class="concert-detail" style="margin-top:0.2rem; font-size:0.75rem;">8:00 PM — Masterclass &amp; Concert</p>
+      </div>
+      <span class="concert-tag">Info</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Contact</p>
+  <h2 class="section-title">Get in Touch</h2>
+  <div class="divider"></div>
+  <p class="contact-sub">For concert bookings, collaborations, press enquiries, or general questions.</p>
+
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:your@email.com">
+      <span class="contact-link-label">Email</span>
+      <span class="contact-link-value">your@email.com</span>
+    </a>
+    <a class="contact-link" href="https://youtube.com" target="_blank">
+      <span class="contact-link-label">YouTube</span>
+      <span class="contact-link-value">Your Channel</span>
+    </a>
+    <a class="contact-link" href="https://instagram.com" target="_blank">
+      <span class="contact-link-label">Instagram</span>
+      <span class="contact-link-value">@yourhandle</span>
+    </a>
+  </div>
+
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <input type="text" placeholder="Your name" required />
+    <input type="email" placeholder="Your email" required />
+    <input type="text" placeholder="Subject" />
+    <textarea placeholder="Your message"></textarea>
+    <button type="submit" class="btn-light">Send Message</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Your Name. All rights reserved.</span>
+  <span>Lutenist · Theorbist · Guitarist · Music Theorist</span>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Replace with your form handler (e.g. Formspree, Netlify Forms, EmailJS)
+    alert('Thank you! Your message has been sent.\n\n(Connect a form service like Formspree to make this functional.)');
+    e.target.reset();
+  }
+</script>
 </body>
 </html>
